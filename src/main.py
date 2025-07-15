@@ -14,6 +14,7 @@ import calibration_plot
 def main():
 
     # PART 1: Instanciate etl, saving the two datasets in `./data/`
+    etl.etl()
 
     # PART 2: Call functions/instanciate objects from preprocessing
 

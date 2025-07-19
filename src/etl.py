@@ -16,5 +16,5 @@ arrest_events_raw.drop(columns=['filing_date'], inplace=True)
 
 def etl():
     os.makedirs('data', exist_ok=True)
-    pred_universe_raw.to_csv('data/pred_universe_raw.csv')
-    arrest_events_raw.to_csv('data/arrest_events_raw.csv')
+    pred_universe_raw.to_csv('data/pred_universe_raw.csv', index = False)
+    arrest_events_raw.to_csv('data/arrest_events_raw.csv', index = False)

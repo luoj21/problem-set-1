@@ -17,12 +17,16 @@ def main():
     etl.etl()
 
     # PART 2: Call functions/instanciate objects from preprocessing
+    preprocessing.run_preprocessing()
 
     # PART 3: Call functions/instanciate objects from logistic_regression
+    logistic_regression.predict_lr_model()
 
     # PART 4: Call functions/instanciate objects from decision_tree
+    decision_tree.predict_dt_model()
 
     # PART 5: Call functions/instanciate objects from calibration_plot
+    calibration_plot.show_calibration_results()
 
 
 if __name__ == "__main__":

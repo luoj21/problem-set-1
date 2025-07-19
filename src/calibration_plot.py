@@ -16,6 +16,7 @@ Do both metrics agree that one model is more accurate than the other? Print this
 from sklearn.calibration import calibration_curve
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd
 
 # Calibration plot function 
 def calibration_plot(y_true, y_prob, n_bins=10):
@@ -43,3 +44,15 @@ def calibration_plot(y_true, y_prob, n_bins=10):
     plt.title("Calibration Plot")
     plt.legend(loc="best")
     plt.show()
+
+
+def show_calibration_results():
+    """ Plots the calibration plots"""
+    df_arrests_test_LR = pd.read_csv('data/df_arrests_test_LR.csv')
+    df_arrests_test_DT = pd.read_csv('data/df_arrests_test_DT.csv')
+
+    # Calibration plot for logistic regression
+    calibration_plot(df_arrests_test_LR['y'], df_arrests_test_LR['pred_lr_prob_1'], n_bins=5)
+
+    #  Calibration plot for decision Tree
+    calibration_plot(df_arrests_test_DT['y'], df_arrests_test_DT['pred_dt_prob_1'], n_bins=5)

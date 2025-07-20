@@ -47,7 +47,7 @@ def create_y(row):
     
 
 def create_arrested_last_year(row):
-    """ Checks if a person was arrested for a felony crime in the 365 prior to their current charge`
+    """ Checks if a person was arrested for a felony crime in the 365 days prior to their current charge`
     
     Parameters:
     - row: a row of the `df_arrests` dataframe
@@ -91,7 +91,7 @@ def run_preprocessing():
     df_arrests['was_arrested_last_year'] = df_arrests.apply(create_arrested_last_year, axis = 1)
     print(f"What is the average number of felony arrests in the last year? Answer: {np.sum(df_arrests.groupby('person_id')['was_arrested_last_year'].max()) / 365} \n")
 
-    print(pred_universe.head())
+    print(df_arrests.head())
 
     # getting relavant features
     df_arrests = df_arrests[['person_id',

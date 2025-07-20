@@ -91,8 +91,6 @@ def run_preprocessing():
     df_arrests['was_arrested_last_year'] = df_arrests.apply(create_arrested_last_year, axis = 1)
     print(f"What is the average number of felony arrests in the last year? Answer: {np.sum(df_arrests.groupby('person_id')['was_arrested_last_year'].max()) / 365} \n")
 
-    print(df_arrests.head())
-
     # getting relavant features
     df_arrests = df_arrests[['person_id',
                             'arrest_id_current',
@@ -120,6 +118,8 @@ def run_preprocessing():
                                                     'y': 'max',
                                                     'current_charge_felony': 'max'})
     df_arrests['num_fel_arrests_last_year'] = num_fel_arrests_last_year
+
+    print(df_arrests.head())
 
     # export df_arrests to data/
     df_arrests.to_csv('data/df_arrests.csv', index = False)

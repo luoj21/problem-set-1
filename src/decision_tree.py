@@ -34,11 +34,10 @@ def create_dt_model(X_train, y_train):
     """
     
     param_grid = {'max_depth': [100, 200, 500]}
-    dt_model = DTC()
+    dt_model = DTC(random_state=10)
     gs_cv_dt = GridSearchCV(estimator=dt_model,
         param_grid=param_grid,
-        cv=5,
-        scoring='accuracy')
+        cv=5)
 
     gs_cv_dt.fit(X_train, y_train)
     optimal_max_depth = gs_cv_dt.best_params_['max_depth']
@@ -51,7 +50,7 @@ def create_dt_model(X_train, y_train):
     else:
         reg_strength = "Medium regularization"
 
-    print(f"How much regularization?  Answer: {reg_strength}")
+    print(f"How much regularization? Answer: {reg_strength}")
 
     return gs_cv_dt
 

@@ -33,14 +33,13 @@ def create_lr_model(X_train, y_train):
     - gs_cv: Fitted LR model
     
     """
-    param_grid = {'C': [0.01, 0.10, 10]}
+    param_grid = {'C': [0.01, 1, 10]}
     lr_model = lr()
 
     gs_cv = GridSearchCV(
         estimator=lr_model,
         param_grid=param_grid,
-        cv=5,
-        scoring='accuracy')
+        cv=5)
 
     gs_cv.fit(X_train, y_train)
     optimal_c = gs_cv.best_params_['C']
@@ -64,8 +63,8 @@ def predict_lr_model():
 
     df_arrests = pd.read_csv('data/df_arrests.csv')
 
-    # get relavant features from df_arrests and perform train/test/split
-    df_arrests_train, df_arrests_test = train_test_split(df_arrests, test_size = 0.3, shuffle = True, stratify=df_arrests['y'])
+    # get relavant features from df_arrests and perform train/test/split, random state for reproducability
+    df_arrests_train, df_arrests_test = train_test_split(df_arrests, test_size = 0.3, shuffle = True, stratify=df_arrests['y'], random_state=1)
     features = ['num_fel_arrests_last_year', 'current_charge_felony']
     X_train = df_arrests_train[features]
     y_train = df_arrests_train['y']

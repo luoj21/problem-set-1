@@ -56,3 +56,5 @@ def show_calibration_results():
 
     #  Calibration plot for decision Tree
     calibration_plot(df_arrests_test_DT['y'], df_arrests_test_DT['pred_dt_prob_1'], n_bins=5)
+
+    print("The decision tree is more calibrated based off the plots.")

@@ -119,6 +119,7 @@ def run_preprocessing():
                                                     'current_charge_felony': 'max'})
     df_arrests['num_fel_arrests_last_year'] = num_fel_arrests_last_year
 
+    print(df_arrests['num_fel_arrests_last_year'].mean())
     print(df_arrests.head())
 
     # export df_arrests to data/

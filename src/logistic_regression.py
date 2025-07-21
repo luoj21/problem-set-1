@@ -27,7 +27,7 @@ def create_lr_model(X_train, y_train):
     
     Parameters;
     - X_train: training data of features
-    - y_train: training labels
+    - y_train: training labels, which are 0 or 1 in this case
     
     Returns:
     - gs_cv: Fitted LR model
@@ -58,10 +58,15 @@ def create_lr_model(X_train, y_train):
 
 
 
-def predict_lr_model():
-    """Imports data and uses trained decision tree for prediction"""
-
-    df_arrests = pd.read_csv('data/df_arrests.csv')
+def predict_lr_model(df_arrests):
+    """Imports data and uses trained logistic regression for prediction. Saves logistic regression results as a .csv
+    
+    Parameters:
+    - df_arrests: the data frame created by the preprocessing step that has all the new features and correct formatting
+    
+    Returns:
+    - None
+    """
 
     # get relavant features from df_arrests and perform train/test/split, random state for reproducability
     df_arrests_train, df_arrests_test = train_test_split(df_arrests, test_size = 0.3, shuffle = True, stratify=df_arrests['y'], random_state=1)
@@ -74,6 +79,8 @@ def predict_lr_model():
     # train and test a logistic regression
     gs_cv = create_lr_model(X_train, y_train)
     df_arrests_test['pred_lr'] = gs_cv.predict(X_test)
+
+    # new features that represent predicted probability of having a future felony crime in the next 365 days (1) or not (0)
     df_arrests_test['pred_lr_prob_0'] = gs_cv.predict_proba(X_test)[:,0]
     df_arrests_test['pred_lr_prob_1'] = gs_cv.predict_proba(X_test)[:,1]
 

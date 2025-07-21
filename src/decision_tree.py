@@ -57,12 +57,17 @@ def create_dt_model(X_train, y_train):
 
 
 
-def predict_dt_model():
-    """Imports data and uses trained decision tree for prediction"""
+def predict_dt_model(df_arrests_train, df_arrests_test):
+    """Imports data and uses trained decision tree for prediction. Saves decision tree results as a .csv
     
-    # import training and testing data, same as the one exported from logistic_regression.py
-    df_arrests_train = pd.read_csv('data/df_arrests_train.csv')
-    df_arrests_test = pd.read_csv('data/df_arrests_test_LR.csv')
+    Parameters:
+    - df_arrests_train: training data that was created from the train/test/split in logistic_regression module
+    - df_arrests_test: testing data that was created from the train/test/split in the logisitc_regression module
+    
+    Returns:
+    - None
+    """
+    
     features = ['num_fel_arrests_last_year', 'current_charge_felony']
 
     X_train = df_arrests_train[features]
@@ -73,6 +78,8 @@ def predict_dt_model():
     # train and test a decision tree
     gs_cv_dt = create_dt_model(X_train, y_train)
     df_arrests_test['pred_dt'] = gs_cv_dt.predict(X_test)
+
+    # new features that represent predicted probability of having a future felony crime in the next 365 days (1) or not (0)
     df_arrests_test['pred_dt_prob_0'] = gs_cv_dt.predict_proba(X_test)[:,0]
     df_arrests_test['pred_dt_prob_1'] = gs_cv_dt.predict_proba(X_test)[:,1]
     df_arrests_test.drop(columns = ['pred_lr_prob_0', 'pred_lr_prob_1'], inplace = True)

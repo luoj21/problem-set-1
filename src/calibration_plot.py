@@ -17,7 +17,7 @@ from sklearn.calibration import calibration_curve
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-
+from sklearn.metrics import roc_auc_score
 # Calibration plot function 
 def calibration_plot(y_true, y_prob, n_bins=10):
     """
@@ -46,10 +46,15 @@ def calibration_plot(y_true, y_prob, n_bins=10):
     plt.show()
 
 
-def show_calibration_results():
-    """ Plots the calibration plots"""
-    df_arrests_test_LR = pd.read_csv('data/df_arrests_test_LR.csv')
-    df_arrests_test_DT = pd.read_csv('data/df_arrests_test_DT.csv')
+def show_calibration_results(df_arrests_test_LR,  df_arrests_test_DT):
+    """ Plots the calibration plots based off of results from the logistic regression and decision tree
+    
+    Parameters:
+    - df_arrests_test_LR: testing data that contains the predicted outcome for the logistic regression
+    - df_arrests_test_DT: testing data that contains the predicted outcome for the decision tree
+    
+    Returns:
+    - None"""
 
     # Calibration plot for logistic regression
     calibration_plot(df_arrests_test_LR['y'], df_arrests_test_LR['pred_lr_prob_1'], n_bins=5)
@@ -58,3 +63,6 @@ def show_calibration_results():
     calibration_plot(df_arrests_test_DT['y'], df_arrests_test_DT['pred_dt_prob_1'], n_bins=5)
 
     print("The decision tree is more calibrated based off the plots.")
+
+    print(f"The AUC of the logistic regression is: {roc_auc_score(df_arrests_test_LR['y'], df_arrests_test_LR['pred_lr_prob_1'])}")
+    print(f"The AUC of the decision tree is: {roc_auc_score(df_arrests_test_DT['y'], df_arrests_test_DT['pred_dt_prob_1'])}")
